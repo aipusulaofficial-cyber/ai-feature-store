@@ -1,4 +1,4 @@
-from feature_domain import *
+from feature_domain import Feature, FeatureStore
 
 
 def test_ttl():
