@@ -1,5 +1,6 @@
-from feature_store import *
 import pytest
+
+from feature_store import Feature, FeatureStore
 
 
 def test_versioned_read():
