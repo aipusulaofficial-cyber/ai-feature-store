@@ -1,7 +1,8 @@
 from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
 from opentelemetry import trace
-from feature_domain import *
+from pydantic import BaseModel
+
+from feature_domain import Feature, FeatureStore
 
 try:
     from opentelemetry.sdk.resources import Resource
