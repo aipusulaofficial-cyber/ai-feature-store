@@ -1,7 +1,7 @@
 """Feature store contract: typed definitions, versions and TTL-aware online reads."""
 
-from dataclasses import dataclass
 import time
+from dataclasses import dataclass
 
 
 @dataclass(frozen=True)
