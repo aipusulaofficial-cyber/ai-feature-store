@@ -24,7 +24,6 @@ class PersistentFeatureStore:
     def get(self, name, version):
         with sqlite3.connect(self.path) as db:
             return db.execute(
-                "SELECT name,version,value,expires_at FROM features "
-                "WHERE name=? AND version=?",
+                "SELECT name,version,value,expires_at FROM features WHERE name=? AND version=?",
                 (name, version),
             ).fetchone()
