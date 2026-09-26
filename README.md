@@ -1,29 +1,32 @@
 # AI Feature Store
 
-**Principal-level reference implementation** focused on feature contracts, consistency boundaries, validation, lifecycle management, and serving reliability.
+A feature-serving platform built around explicit feature contracts, freshness validation, lifecycle versioning and online/offline consistency boundaries.
 
-## Engineering intent
-- Clear domain boundaries and replaceable infrastructure adapters
-- Explicit contracts, validation, and failure semantics
-- Deterministic tests with external dependencies isolated
-- Operational readiness through health checks, CI, and security validation
-- Architecture decisions documented so trade-offs are reviewable
+## What this project does
+Features are registered with a defined shape and provenance, validated against contract expectations, and served through controlled boundaries. Freshness and consistency are treated as correctness properties rather than dashboard-only metrics.
 
-## System design
-The repository is structured around explicit responsibilities rather than framework-driven coupling. Domain policy, orchestration, infrastructure adapters, and operational concerns remain separable so components can evolve independently.
+## Architecture
+```text
+Feature definition
+   -> contract + schema validation
+   -> version / provenance
+   -> offline or online boundary
+   -> serving result
+```
 
-## Quality bar
-- **Correctness:** contract, edge-case, and failure-path tests
-- **Reliability:** bounded work, explicit failure behavior, and health signals where applicable
-- **Security:** least-privilege boundaries, input validation, and safe defaults
-- **Observability:** correlation/context propagation and actionable operational signals
-- **Delivery:** reproducible CI validation before changes are considered complete
+The online serving path is kept distinct from offline materialization so latency-sensitive access does not inherit batch concerns.
 
-## Principal engineering contract
-See [docs/PRINCIPAL-ENGINEERING.md](docs/PRINCIPAL-ENGINEERING.md) for the reviewable engineering contract, NFRs, and change-safety checklist.
+## Correctness contract
+- Shape and type validation occurs at the boundary.
+- Feature versions are explicit.
+- Freshness is validated where required.
+- Provenance is retained for operational diagnosis.
+- Offline/online consistency failures are testable failure modes.
 
-## Architecture & decisions
-See [ARCHITECTURE.md](ARCHITECTURE.md) and the ADRs directory for system boundaries, key trade-offs, and extension points.
+## Reliability & security
+External stores are replaceable adapters. Failure paths are explicit and CI includes security validation.
 
-## Engineering principle
-The goal is to make important behavior **explicit, testable, observable, auditable, and replaceable** without adding complexity that does not buy a measurable engineering property.
+## Evidence
+[docs/PRINCIPAL-ENGINEERING.md](docs/PRINCIPAL-ENGINEERING.md) · [ARCHITECTURE.md](ARCHITECTURE.md) · [ADRs](ADRs/)
+
+**Engineering chain:** Code → Contract → Test → Security → Runtime → Observability → Deployment → Evidence.
