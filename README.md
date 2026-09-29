@@ -30,3 +30,6 @@ External stores are replaceable adapters. Failure paths are explicit and CI incl
 [docs/PRINCIPAL-ENGINEERING.md](docs/PRINCIPAL-ENGINEERING.md) · [ARCHITECTURE.md](ARCHITECTURE.md) · [ADRs](ADRs/)
 
 **Engineering chain:** Code → Contract → Test → Security → Runtime → Observability → Deployment → Evidence.
+
+## Portfolio evidence
+[Portfolio evidence map](docs/PORTFOLIO_EVIDENCE.md) — executable proof, architecture mapping and reviewable CI evidence.
