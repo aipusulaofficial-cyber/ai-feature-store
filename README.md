@@ -1,5 +1,10 @@
 # AI Feature Store
 
+[![CI](https://github.com/aipusulaofficial-cyber/ai-feature-store/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/aipusulaofficial-cyber/ai-feature-store/actions/workflows/ci.yml)
+[![Production Tests](https://github.com/aipusulaofficial-cyber/ai-feature-store/actions/workflows/production-tests.yml/badge.svg?branch=main)](https://github.com/aipusulaofficial-cyber/ai-feature-store/actions/workflows/production-tests.yml)
+[![Security / SBOM](https://github.com/aipusulaofficial-cyber/ai-feature-store/actions/workflows/security-sbom.yml/badge.svg?branch=main)](https://github.com/aipusulaofficial-cyber/ai-feature-store/actions/workflows/security-sbom.yml)
+
+
 A feature-serving platform built around explicit feature contracts, freshness validation, lifecycle versioning and online/offline consistency boundaries.
 
 ## What this project does
