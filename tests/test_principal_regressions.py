@@ -1,3 +1,6 @@
+import pytest
+
+from feature_store import Feature, FeatureStore
 from persistent_feature_store import PersistentFeatureStore
 
 
@@ -10,17 +13,11 @@ def test_expired_features_are_not_returned(tmp_path):
 
 
 def test_canonical_feature_store_rejects_nonfinite_ttl():
-    import pytest
-
-    from feature_store import Feature
     with pytest.raises(ValueError):
         Feature("bad", 1, 1.0, float("nan"))
 
 
 def test_canonical_feature_store_rejects_nonfinite_clock():
-    import pytest
-
-    from feature_store import Feature, FeatureStore
     store = FeatureStore()
     store.put(Feature("ok", 1, 1.0, 100.0))
     with pytest.raises(ValueError):
