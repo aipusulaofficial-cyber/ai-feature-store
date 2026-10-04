@@ -1,4 +1,5 @@
 import sqlite3
+import time
 from pathlib import Path
 
 
@@ -21,9 +22,11 @@ class PersistentFeatureStore:
                 (name, version, value, expires_at),
             )
 
-    def get(self, name, version):
+    def get(self, name, version, now=None):
+        current = time.time() if now is None else now
         with sqlite3.connect(self.path) as db:
             return db.execute(
-                "SELECT name,version,value,expires_at FROM features WHERE name=? AND version=?",
-                (name, version),
+                "SELECT name,version,value,expires_at FROM features "
+                "WHERE name=? AND version=? AND (expires_at IS NULL OR expires_at > ?)",
+                (name, version, current),
             ).fetchone()
