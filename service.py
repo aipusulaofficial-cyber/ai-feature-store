@@ -55,17 +55,21 @@ def handle(r: Request):
     with tracer.start_as_current_span("ai-feature-store.domain"):
         try:
             s = FeatureStore()
+            raw_expiry = r.payload.get("expires_at")
+            expires_at = None if raw_expiry is None else float(raw_expiry)
             f = Feature(
                 r.key,
                 int(r.payload.get("version", 1)),
                 float(r.payload.get("value", 0)),
-                float(r.payload.get("expires_at", 1)),
+                expires_at,
             )
             s.put(f)
+            raw_now = r.payload.get("now")
+            now = None if raw_now is None else float(raw_now)
             return {
                 "name": f.name,
                 "version": f.version,
-                "value": s.get(f.name, f.version, now=float(r.payload.get("now", 0))),
+                "value": s.get(f.name, f.version, now=now),
             }
         except (ValueError, KeyError, RuntimeError) as e:
             raise HTTPException(status_code=400, detail=str(e)) from e
