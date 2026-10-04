@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import math
 import time
 from dataclasses import dataclass
 
@@ -16,10 +17,17 @@ class Feature:
     def __post_init__(self) -> None:
         if not self.name.strip():
             raise ValueError("feature name is required")
-        if self.version < 1:
+        if isinstance(self.version, bool) or not isinstance(self.version, int) or self.version < 1:
             raise ValueError("feature version must be positive")
-        if self.expires_at is not None and self.expires_at <= 0:
-            raise ValueError("feature expiry must be positive")
+        if isinstance(self.value, bool) or not isinstance(self.value, (int, float)) or not math.isfinite(self.value):
+            raise ValueError("feature value must be finite")
+        if self.expires_at is not None and (
+            isinstance(self.expires_at, bool)
+            or not isinstance(self.expires_at, (int, float))
+            or not math.isfinite(self.expires_at)
+            or self.expires_at <= 0
+        ):
+            raise ValueError("feature expiry must be finite and positive")
 
 
 class FeatureStore:
@@ -34,6 +42,12 @@ class FeatureStore:
         if feature is None:
             raise KeyError(name)
         current_time = time.time() if now is None else now
+        if (
+            isinstance(current_time, bool)
+            or not isinstance(current_time, (int, float))
+            or not math.isfinite(current_time)
+        ):
+            raise ValueError("now must be a finite timestamp")
         if feature.expires_at is not None and current_time >= feature.expires_at:
             raise KeyError("expired feature")
         return feature.value
