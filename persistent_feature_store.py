@@ -15,7 +15,13 @@ class PersistentFeatureStore:
             )
 
     def put(self, name, version, value, expires_at=None):
-        if not isinstance(name, str) or not name.strip() or isinstance(version, bool) or not isinstance(version, int) or version < 1:
+        if (
+            not isinstance(name, str)
+            or not name.strip()
+            or isinstance(version, bool)
+            or not isinstance(version, int)
+            or version < 1
+        ):
             raise ValueError("invalid feature")
         if expires_at is not None and (
             isinstance(expires_at, bool)
@@ -31,7 +37,11 @@ class PersistentFeatureStore:
 
     def get(self, name, version, now=None):
         current = time.time() if now is None else now
-        if isinstance(current, bool) or not isinstance(current, (int, float)) or not math.isfinite(current):
+        if (
+            isinstance(current, bool)
+            or not isinstance(current, (int, float))
+            or not math.isfinite(current)
+        ):
             raise ValueError("now must be a finite timestamp")
         with sqlite3.connect(self.path) as db:
             row = db.execute(
