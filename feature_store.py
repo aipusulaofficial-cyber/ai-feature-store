@@ -19,7 +19,11 @@ class Feature:
             raise ValueError("feature name is required")
         if isinstance(self.version, bool) or not isinstance(self.version, int) or self.version < 1:
             raise ValueError("feature version must be positive")
-        if isinstance(self.value, bool) or not isinstance(self.value, (int, float)) or not math.isfinite(self.value):
+        if (
+            isinstance(self.value, bool)
+            or not isinstance(self.value, (int, float))
+            or not math.isfinite(self.value)
+        ):
             raise ValueError("feature value must be finite")
         if self.expires_at is not None and (
             isinstance(self.expires_at, bool)
